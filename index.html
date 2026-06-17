@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFC Gaming Shop | Resmi Espor ve Oyuncu Ürünleri</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Çerez Politikası Bildirimi -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <p><i class="fa-solid fa-cookie-bite"></i> Alışveriş deneyiminizi iyileştirmek için yasal düzenlemelere uygun çerezler (cookies) kullanıyoruz.</p>
+            <button class="btn-cookie" onclick="acceptCookies()">Kabul Et</button>
+        </div>
+    </div>
+
+    <!-- Üst Duyuru Çubuğu (Marquee Efekti - Orijinal Sitedeki "CHEER FOR AURORA" Akışı) -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span>CHEER FOR EFC GAMING <i class="fa-solid fa-bolt"></i> WEAR EFC GAMING</span>
+            <span>CHEER FOR EFC GAMING <i class="fa-solid fa-bolt"></i> WEAR EFC GAMING</span>
+            <span>CHEER FOR EFC GAMING <i class="fa-solid fa-bolt"></i> WEAR EFC GAMING</span>
+            <span>CHEER FOR EFC GAMING <i class="fa-solid fa-bolt"></i> WEAR EFC GAMING</span>
+            <span>CHEER FOR EFC GAMING <i class="fa-solid fa-bolt"></i> WEAR EFC GAMING</span>
+            <span>CHEER FOR EFC GAMING <i class="fa-solid fa-bolt"></i> WEAR EFC GAMING</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <!-- Menü Butonu (Mobil) -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menüyü Aç">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Logo (Sarı-Siyah-Beyaz Gaming Tarzı Esas Alınarak Kod ile Çizilen Modern SVG Logo) -->
+            <a href="#" class="navbar-logo" onclick="navigateTo('home')">
+                <svg viewBox="0 0 500 120" width="180" height="45">
+                    <defs>
+                        <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFDD00;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFB700;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- EFC Keskin Logo Amblemi -->
+                    <path d="M10 20 L80 20 L65 50 L35 50 L30 65 L60 65 L50 80 L25 80 L20 100 L90 100 L80 115 L10 115 Z" fill="url(#yellowGrad)" />
+                    <path d="M45 20 L85 20 L65 115 L45 115 Z" fill="#FFFFFF" opacity="0.15" />
+                    <!-- Yazı Alanı -->
+                    <text x="110" y="65" font-family="'Orbitron', sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" letter-spacing="2">EFC</text>
+                    <text x="110" y="100" font-family="'Rajdhani', sans-serif" font-weight="700" font-size="28" fill="#FFDD00" letter-spacing="4">GAMING</text>
+                    <!-- Dekoratif Sağ Çizgiler -->
+                    <polygon points="440,45 460,45 445,85 425,85" fill="#FFDD00" />
+                    <polygon points="465,45 475,45 460,85 450,85" fill="#FFFFFF" />
+                </svg>
+            </a>
+
+            <!-- Navigasyon Linkleri -->
+            <nav class="nav-links" id="navLinks">
+                <button class="mobile-close-btn" id="mobileCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+                <a href="#" class="nav-item active" data-page="home" onclick="navigateTo('home')">Anasayfa</a>
+                <a href="#" class="nav-item" data-page="formalar" onclick="filterCategory('Formalar')">Formalar</a>
+                <a href="#" class="nav-item" data-page="aksesuarlar" onclick="filterCategory('Aksesuarlar')">Aksesuarlar</a>
+                <a href="#" class="nav-item" data-page="hakkinda" onclick="navigateTo('about')">Hakkımızda</a>
+                <a href="#" class="nav-item" data-page="admin" onclick="navigateTo('admin')"><i class="fa-solid fa-lock"></i> Admin</a>
+            </nav>
+
+            <!-- Sağ İkonlar Kontrolleri -->
+            <div class="nav-actions">
+                <!-- Arama Çubuğu Tetikleyici -->
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Ürün ara..." oninput="handleSearch(this.value)">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+                
+                <a href="#" class="nav-icon-btn" onclick="openAuthModal()" title="Giriş Yap">
+                    <i class="fa-solid fa-regular fa-user"></i>
+                </a>
+                
+                <button class="nav-icon-btn cart-trigger" id="cartTrigger" onclick="toggleCart(true)">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-badge" id="cartBadgeCount">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ANA İÇERİK ALANI (Dinamik Sayfa Yönetimi) -->
+    <main id="mainContent">
+        
+        <!-- ================= ANASAYFA GÖRÜNÜMÜ ================= -->
+        <section id="page-home" class="page-section active-section">
+            
+            <!-- Karusel / Kahraman Banner Alanı (Slider) -->
+            <div class="slider-wrapper">
+                <div class="slider-container" id="mainSlider">
+                    <!-- Slide 1 -->
+                    <div class="slide active">
+                        <div class="slide-bg" style="background-image: linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1920');"></div>
+                        <div class="slide-content">
+                            <span class="slide-tag">EFC GAMING</span>
+                            <h2 class="slide-title">Türkiye Mağazamız Açıldı!</h2>
+                            <p class="slide-desc">Resmi espor kulübü EFC Gaming ürünleri şimdi ulusal ve global olarak yayında. Takımını desteklemek için hazır mısın?</p>
+                            <a href="#products-section" class="btn btn-primary">ŞİMDİ KEŞFET <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slide">
+                        <div class="slide-bg" style="background-image: linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=1920');"></div>
+                        <div class="slide-content">
+                            <span class="slide-tag">EFC JERSEY 2026</span>
+                            <h2 class="slide-title">Büyük Sahnelerin Resmi Forması</h2>
+                            <p class="slide-desc">Maksimum performans, terletmeyen özel espor aerodinamik kumaş dokusuyla şampiyonların tercihi EFC Pro formaları stoklarda.</p>
+                            <a href="#" onclick="filterCategory('Formalar')" class="btn btn-primary">FORMALARI İNCELE <i class="fa-solid fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <div class="slide-bg" style="background-image: linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?auto=format&fit=crop&q=80&w=1920');"></div>
+                        <div class="slide-content">
+                            <span class="slide-tag">KUSURSUZ KONTROL</span>
+                            <h2 class="slide-title">Yeni Nesil Pro Oyun Kolluğu</h2>
+                            <p class="slide-desc">EFC Gaming Sleeve 2026: Mouse pad üzerinde kusursuz sürtünme katsayısı ve maksimum konfor sağlayan oyun kolu koruyucuları.</p>
+                            <a href="#" onclick="filterCategory('Aksesuarlar')" class="btn btn-primary">AKSESUARLARI GÖR <i class="fa-solid fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slider Navigasyon Okları -->
+                <button class="slider-arrow prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="slider-arrow next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                
+                <!-- Slider Noktaları (Dots) -->
+                <div class="slider-dots">
+                    <span class="dot active" onclick="currentSlide(0)"></span>
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                </div>
+            </div>
+
+            <!-- RESMİ ÜRÜNLER ALANI -->
+            <section class="products-section-container" id="products-section">
+                <div class="section-header-block">
+                    <div class="title-left">
+                        <span class="sub-accent">// OFFICIAL PRODUCTS</span>
+                        <h2 class="main-heading">Büyük Sahnelerin Forması ve Aksesuarları</h2>
+                    </div>
+                    <div class="filter-tabs-row" id="categoryTabs">
+                        <button class="tab-btn active" onclick="filterCategory('Tümü')">Tümü</button>
+                        <button class="tab-btn" onclick="filterCategory('Formalar')">Formalar</button>
+                        <button class="tab-btn" onclick="filterCategory('Aksesuarlar')">Aksesuarlar</button>
+                    </div>
+                </div>
+
+                <!-- Ürün Kartları Grid Listesi -->
+                <div class="products-grid" id="productsGridContainer">
+                    <!-- Dinamik olarak JavaScript tarafından yüklenecektir -->
+                </div>
+            </section>
+
+            <!-- JUMBO HERO BANNER 1 (Orijinal Sitedeki FORMALARI İNCELE Geniş Bölümü) -->
+            <section class="jumbo-banner reverse-layout">
+                <div class="jumbo-image-side" style="background-image: url('https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&q=80&w=1200');">
+                    <div class="badge-overlay">STOKLARLA SINIRLI</div>
+                </div>
+                <div class="jumbo-text-side">
+                    <span class="jumbo-tag">EFC İLE GİYİN</span>
+                    <h3 class="jumbo-title">Profesyonel Espor Sahnesi İçin Özel Olarak Tasarlandı</h3>
+                    <p class="jumbo-p">Sezon boyunca EFC Gaming espor oyuncuları tarafından turnuvalarda giyilen resmi espor formaları. Sınırlı sayıda üretilen bu seriyi kaçırma ve hemen takımının parçası ol!</p>
+                    <button class="btn btn-primary btn-large" onclick="filterCategory('Formalar')">FORMALARI İNCELE <i class="fa-solid fa-shirt"></i></button>
+                </div>
+            </section>
+
+            <!-- JUMBO HERO BANNER 2 (Orijinal Sitedeki OYUN KOLLUĞU Aksesuar Bölümü) -->
+            <section class="jumbo-banner">
+                <div class="jumbo-text-side">
+                    <span class="jumbo-tag">YENİ ÇIKANLAR</span>
+                    <h3 class="jumbo-title">EFC Pro Oyun Kolluğu: Maksimum Konfor, Kusursuz Kontrol</h3>
+                    <p class="jumbo-p">Mouse pad üzerindeki bilek sürtünmesini sıfıra indiren, esnek ve nefes alabilen mikrofiber yapısıyla aim kontrolünü en üst seviyeye taşıyan profesyonel espor kollukları.</p>
+                    <button class="btn btn-outline btn-large" onclick="filterCategory('Aksesuarlar')">AKSESUARLARA GÖZ AT <i class="fa-solid fa-crosshairs"></i></button>
+                </div>
+                <div class="jumbo-image-side" style="background-image: url('https://images.unsplash.com/photo-1616440347437-b1c73416efc2?auto=format&fit=crop&q=80&w=1200');"></div>
+            </section>
+
+            <!-- IKAS/E-TICARET AVANTAJLARI GÜVENLİK İKONLARI BÖLÜMÜ -->
+            <section class="trust-features-row">
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </div>
+                    <h4>Kolay İade</h4>
+                    <p>Tüm siparişlerinizde koşulsuz şartsız geri iade ve değişim güvencesi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h4>Güvenli Alışveriş</h4>
+                    <p>256-bit SSL şifreleme sertifikası altyapısı ile güvende ödeme!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-ruler-combined"></i>
+                    </div>
+                    <h4>Beden Tablosu</h4>
+                    <p>Ürün detaylarında yer alan tam kalıp beden tablosu ile sana uygun olanı bul!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-hourglass-start"></i>
+                    </div>
+                    <h4>Ön Sipariş Avantajı</h4>
+                    <p>Yeni sezon sınırlı üretim espor koleksiyonları tükenmeden ön sipariş ver!</p>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- ================= ÜRÜN DETAY SAYFASI GÖRÜNÜMÜ ================= -->
+        <section id="page-product-detail" class="page-section">
+            <div class="breadcrumb">
+                <a href="#" onclick="navigateTo('home')">Anasayfa</a> <i class="fa-solid fa-angle-right"></i> 
+                <span id="detailBreadcrumbCategory">Kategori</span> <i class="fa-solid fa-angle-right"></i> 
+                <span id="detailBreadcrumbTitle" class="current">Ürün Adı</span>
+            </div>
+            
+            <div class="product-detail-container" id="productDetailContainer">
+                <!-- JavaScript dinamik dolduracak -->
+            </div>
+        </section>
+
+        <!-- ================= HAKKIMIZDA SAYFASI ================= -->
+        <section id="page-about" class="page-section">
+            <div class="static-page-layout">
+                <h2 class="page-main-title">EFC Gaming Hakkında</h2>
+                <div class="static-content">
+                    <p class="lead-text">Şampiyonların ve espor tutkunlarının ortak buluşma noktası olan <strong>EFC Gaming</strong>, 2022 yılından bu yana uluslararası arenalarda fırtınalar estiren bir espor organizasyonunun tekstil ve lisanslı ürünler markasıdır.</p>
+                    <p>Amacımız, profesyonel oyuncuların turnuva sahnelerinde ihtiyaç duyduğu yüksek konfor ve esnekliği, en kaliteli tekstil teknolojileri ile birleştirerek taraftarlarımıza ve tüm oyuncu topluluğuna sunmaktır. Sitemizde yer alan tüm ürünler, esporcularımızın geri bildirimleri ve testleri doğrultusunda ergonomik olarak tasarlanmıştır.</p>
+                    <div class="about-stats-grid">
+                        <div class="stat-box">
+                            <h3>15+</h3>
+                            <p>Global Turnuva Derecesi</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>50K+</h3>
+                            <p>Mutlu Oyuncu Siparişi</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>%100</h3>
+                            <p>Orijinal Espor Kalitesi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= İLETİŞİM SAYFASI ================= -->
+        <section id="page-contact" class="page-section">
+            <div class="static-page-layout">
+                <h2 class="page-main-title">Bizimle İletişime Geçin</h2>
+                <div class="contact-grid">
+                    <div class="contact-info-column">
+                        <h3>EFC Gaming Destek Hattı</h3>
+                        <p>Siparişleriniz, kargo durumu, iade/değişim talepleriniz ve iş birlikleri için aşağıdaki kanallardan bize haftanın her günü ulaşabilirsiniz.</p>
+                        
+                        <div class="contact-card-info">
+                            <div class="c-item"><i class="fa-solid fa-envelope"></i> <span>destek@efcgaming.shop.tr</span></div>
+                            <div class="c-item"><i class="fa-solid fa-location-dot"></i> <span>Maslak, Büyükdere Cd. No:239, 34485 Sarıyer/İstanbul, Türkiye</span></div>
+                            <div class="c-item"><i class="fa-solid fa-headset"></i> <span>Müşteri Hizmetleri: 0850 300 XX XX (09:00 - 18:00)</span></div>
+                        </div>
+                    </div>
+                    <div class="contact-form-column">
+                        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                            <div class="form-group">
+                                <label for="c_name">Adınız Soyadınız</label>
+                                <input type="text" id="c_name" required placeholder="Örn: Ahmet Yılmaz">
+                            </div>
+                            <div class="form-group">
+                                <label for="c_email">E-posta Adresiniz</label>
+                                <input type="email" id="c_email" required placeholder="ahmet@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="c_subject">Konu</label>
+                                <input type="text" id="c_subject" required placeholder="Sipariş Durumu, Beden Değişimi vb.">
+                            </div>
+                            <div class="form-group">
+                                <label for="c_message">Mesajınız</label>
+                                <textarea id="c_message" rows="5" required placeholder="Mesajınızı detaylıca buraya yazınız..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">MESAJI GÖNDER <i class="fa-solid fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SAHTE GÜVENLİ ÖDEME CHECKOUT SAYFASI ================= -->
+        <section id="page-checkout" class="page-section">
+            <div class="checkout-page-container">
+                <div class="checkout-header">
+                    <h2><i class="fa-solid fa-lock security-lock-icon"></i> EFC Gaming Güvenli Ödeme Altyapısı</h2>
+                    <p>Siparişinizi tamamlamak için lütfen bilgilerinizi giriniz. (Bu bir demo ödeme ekranıdır, gerçek işlem yapılmaz.)</p>
+                </div>
+                
+                <div class="checkout-layout-grid">
+                    <!-- Sol Taraf Form Bilgileri -->
+                    <div class="checkout-form-side">
+                        <h3 class="checkout-step-title"><i class="fa-solid fa-truck"></i> 1. Kargo ve Teslimat Bilgileri</h3>
+                        <div class="form-row-double">
+                            <div class="form-group">
+                                <label>Adınız *</label>
+                                <input type="text" placeholder="Ad" required value="Efe">
+                            </div>
+                            <div class="form-group">
+                                <label>Soyadınız *</label>
+                                <input type="text" placeholder="Soyad" required value="Coşkun">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon Numarası *</label>
+                            <input type="tel" placeholder="05XX XXX XX XX" required value="0532 123 45 67">
+                        </div>
+                        <div class="form-group">
+                            <label>Açık Adres *</label>
+                            <textarea rows="3" placeholder="Mahalle, Cadde, Sokak, Daire No..." required>Levent Mahallesi, espor Plaza Kat:4 No:12 Beşiktaş</textarea>
+                        </div>
+                        <div class="form-row-double">
+                            <div class="form-group">
+                                <label>Şehir *</label>
+                                <input type="text" placeholder="İstanbul" required value="İstanbul">
+                            </div>
+                            <div class="form-group">
+                                <label>Posta Kodu</label>
+                                <input type="text" placeholder="34330" value="34330">
+                            </div>
+                        </div>
+
+                        <h3 class="checkout-step-title" style="margin-top: 30px;"><i class="fa-solid fa-credit-card"></i> 2. Kart ile Ödeme Bilgileri</h3>
+                        <div class="form-group">
+                            <label>Kart Üzerindeki İsim</label>
+                            <input type="text" placeholder="EFE COŞKUN">
+                        </div>
+                        <div class="form-group">
+                            <label>Kart Numarası</label>
+                            <div class="input-with-icon">
+                                <input type="text" placeholder="4355 •••• •••• 1907" maxlength="19">
+                                <i class="fa-brands fa-cc-visa card-brand-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row-double">
+                            <div class="form-group">
+                                <label>Son Kullanma (AA/YY)</label>
+                                <input type="text" placeholder="12/29" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label>CVC (Güvenlik Kodu)</label>
+                                <input type="password" placeholder="•••" maxlength="3">
+                            </div>
+                        </div>
+                        
+                        <div class="secure-badge-box">
+                            <i class="fa-solid fa-shield-halved"></i> <span>256-Bit SSL Koruma Teknolojisi ile verileriniz şifrelenir.</span>
+                        </div>
+                    </div>
+
+                    <!-- Sağ Taraf Özet Bilgileri -->
+                    <div class="checkout-summary-side">
+                        <h3>Sipariş Özeti</h3>
+                        <div class="checkout-items-list" id="checkoutItemsList">
+                            <!-- JS ile sepet elemanları eklenecek -->
+                        </div>
+                        
+                        <div class="summary-divider"></div>
+                        
+                        <div class="summary-row">
+                            <span>Ara Toplam</span>
+                            <span id="checkoutSubtotal">₺ 0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Kargo Ücreti</span>
+                            <span class="free-shipping">ÜCRETSİZ</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total-row">
+                            <span>Genel Toplam</span>
+                            <span id="checkoutTotal">₺ 0.00</span>
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-large w-100" style="margin-top:20px;" onclick="processFakePayment()">
+                            ÖDEMEYİ TAMAMLA (DEMO) <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline w-100" style="margin-top:10px;" onclick="navigateTo('home')">
+                            Alışverişe Devam Et
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+<section id="page-admin" class="page-section">
+    <div class="static-page-layout" style="max-width: 1200px;">
+        <h2 class="page-main-title">EFC Mağaza Yönetim Paneli</h2>
+        
+        <div class="checkout-layout-grid">
+            <div class="checkout-form-side" style="width: 40%; padding-right: 3%;">
+                <h3 class="checkout-step-title"><i class="fa-solid fa-plus"></i> Yeni Ürün Ekle</h3>
+                <form id="adminProductForm" onsubmit="handleAdminAddProduct(event)">
+                    <div class="form-group">
+                        <label>Ürün Adı *</label>
+                        <input type="text" id="admin_p_title" required placeholder="Örn: EFC Pro Hoodie">
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori *</label>
+                        <select id="admin_p_category" style="width: 100%; background-color: var(--color-dark-surface); border: 1px solid var(--color-dark-border); padding: 12px 15px; border-radius: var(--border-radius-gaming); color: #FFF; font-size: 16px;">
+                            <option value="Formalar">Formalar</option>
+                            <option value="Aksesuarlar">Aksesuarlar</option>
+                        </select>
+                    </div>
+                    <div class="form-row-double">
+                        <div class="form-group">
+                            <label>Eski Fiyat (₺) *</label>
+                            <input type="number" step="0.01" id="admin_p_oldprice" required placeholder="1999.00">
+                        </div>
+                        <div class="form-group">
+                            <label>İndirimli Fiyat (₺) *</label>
+                            <input type="number" step="0.01" id="admin_p_currprice" required placeholder="1499.00">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Görsel URL'si (Ön Yüz) *</label>
+                        <input type="text" id="admin_p_img" required placeholder="./resimler/forma1.png VEYA Web Linki">
+                    </div>
+                    <div class="form-group">
+                        <label>Ürün Açıklaması *</label>
+                        <textarea id="admin_p_desc" rows="3" required placeholder="Ürün detaylarını yazınız..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">ÜRÜNÜ YAYINLA <i class="fa-solid fa-rocket"></i></button>
+                </form>
+            </div>
+
+            <div class="checkout-summary-side" style="width: 60%; background-color: var(--color-dark-surface);">
+                <h3 class="checkout-step-title"><i class="fa-solid fa-list"></i> Mağazadaki Ürünler (<span id="adminProductCount">0</span>)</h3>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--color-dark-border); color: var(--color-primary);">
+                                <th style="padding: 10px;">Görsel</th>
+                                <th style="padding: 10px;">Ürün Adı</th>
+                                <th style="padding: 10px;">Kategori</th>
+                                <th style="padding: 10px;">Fiyat</th>
+                                <th style="padding: 10px; text-align: center;">Eylem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminProductsTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- SAĞ TARAF SEPET DRAWER MENÜSÜ -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart(false)"></div>
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-drawer-header">
+            <h3><i class="fa-solid fa-bag-shopping"></i> SEPETİM (<span id="cartHeaderCount">0</span>)</h3>
+            <button class="cart-close-btn" onclick="toggleCart(false)"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <!-- Boş Sepet Durumu -->
+        <div class="cart-empty-state" id="cartEmptyState">
+            <div class="empty-icon-wrapper">
+                <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+            <p>Sepetinizde henüz bir ürün bulunmuyor.</p>
+            <button class="btn btn-primary" onclick="toggleCart(false)">Alışverişe Başla</button>
+        </div>
+
+        <!-- Dolu Sepet Durumu Ürün Listesi -->
+        <div class="cart-items-wrapper" id="cartItemsWrapper">
+            <!-- JS Dinamik Ürün Satırları -->
+        </div>
+
+        <!-- Sepet Alt Toplam ve Satın Al Butonu Sabit Alanı -->
+        <div class="cart-drawer-footer" id="cartDrawerFooter" style="display: none;">
+            <div class="cart-subtotal-row">
+                <span>Tahmini Toplam Tutar:</span>
+                <span class="subtotal-price" id="cartSubtotalPrice">₺ 0.00</span>
+            </div>
+            <p class="shipping-info-text"><i class="fa-solid fa-truck-fast"></i> Siparişiniz ücretsiz kargo ile gönderilecektir.</p>
+            <button class="btn btn-primary btn-large w-100" onclick="goToCheckout()">ÖDEME SAYFASINA GEÇ <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </aside>
+
+    <!-- GİRİŞ YAP MODAL (AUTH POPUP) -->
+    <div class="modal-overlay" id="authModal" onclick="closeAuthModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active">Giriş Yap</button>
+                <button class="modal-tab-btn">Kayıt Ol</button>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('Demo modu: Başarıyla giriş yapıldı!'); closeAuthModal();" style="padding-top:15px;">
+                <div class="form-group">
+                    <label>E-posta Adresi</label>
+                    <input type="email" placeholder="ornek@efcgaming.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifre</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" style="margin-top:10px;">Oturum Aç</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ALT BİLGİ ALANI (FOOTER) -->
+    <footer class="footer">
+        <div class="footer-top-container">
+            <!-- Sütun 1: Marka Tanımı ve Logo -->
+            <div class="footer-column brand-column">
+                <svg viewBox="0 0 500 120" width="180" height="45" style="margin-bottom: 15px;">
+                    <path d="M10 20 L80 20 L65 50 L35 50 L30 65 L60 65 L50 80 L25 80 L20 100 L90 100 L80 115 L10 115 Z" fill="#FFDD00" />
+                    <text x="110" y="65" font-family="'Orbitron', sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" letter-spacing="2">EFC</text>
+                    <text x="110" y="100" font-family="'Rajdhani', sans-serif" font-weight="700" font-size="28" fill="#FFDD00" letter-spacing="4">GAMING</text>
+                </svg>
+                <p class="footer-about-text">EFC Gaming espor organizasyonunun resmi lisanslı mağazasıdır. En yüksek kaliteli espor formaları, aksesuarları ve oyuncu donanımları taraftarlarımız için burada birleşiyor.</p>
+                <div class="footer-socials">
+                    <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://discord.com" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+
+            <!-- Sütun 2: Ürün Kategorileri -->
+            <div class="footer-column links-column">
+                <h4 class="footer-heading">Ürünler</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#" onclick="filterCategory('Tümü')">Tüm Ürünler</a></li>
+                    <li><a href="#" onclick="filterCategory('Formalar')">Espor Formaları</a></li>
+                    <li><a href="#" onclick="filterCategory('Aksesuarlar')">Oyun Kollukları</a></li>
+                    <li><a href="#" onclick="filterCategory('Aksesuarlar')">Yeni Çıkan Aksesuarlar</a></li>
+                </ul>
+            </div>
+
+            <!-- Sütun 3: Kurumsal Bilgiler -->
+            <div class="footer-column links-column">
+                <h4 class="footer-heading">EFC Gaming</h4>
+                <ul class="footer-links-list">
+                    <li><a href="#" onclick="navigateTo('about')">Hakkımızda</a></li>
+                    <li><a href="#" onclick="navigateTo('contact')">İletişim & Destek</a></li>
+                    <li><a href="#" onclick="alert('Demo Sözleşme: Satış Sözleşmesi')">Mesafeli Satış Sözleşmesi</a></li>
+                    <li><a href="#" onclick="alert('Demo Politika: Gizlilik Politikası')">Gizlilik Politikası</a></li>
+                    <li><a href="#" onclick="alert('Demo Politika: İade Politikası')">İade ve Değişim Politikası</a></li>
+                </ul>
+            </div>
+
+            <!-- Sütun 4: Bülten Aboneliği (Orijinal Sitedeki Yapı) -->
+            <div class="footer-column newsletter-column">
+                <h4 class="footer-heading">EFC'ye Katıl!</h4>
+                <p class="newsletter-text">Yeni ürünler, espor turnuvaları, özel indirim fırsatları ve sürpriz drop hediyelerinden ilk sen haberdar ol!</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Bültene başarıyla kaydoldunuz! Teşekkürler.'); this.reset();">
+                    <input type="email" placeholder="E-posta adresinizi girin" required>
+                    <button type="submit" aria-label="Abone Ol"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div class="footer-bottom-container">
+                <p class="copyright-text">&copy; 2026 EFC Gaming | Powered by ikas Altyapısı Esas Alınmıştır.</p>
+                <div class="payment-badges">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-amex"></i>
+                    <span class="ssl-badge"><i class="fa-solid fa-lock"></i> SSL Secured</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
